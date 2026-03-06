@@ -2,13 +2,13 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-
 import { RootStackParamList, MainTabParamList } from '@/types';
 import HomeScreen from '@/screens/HomeScreen';
 import NewNoteScreen from '@/screens/NewNoteScreen';
 import SummaryScreen from '@/screens/SummaryScreen';
 import SettingsScreen from '@screens/SettingsScreen';
 import BottomNavigation from './BottomNavigation';
+import BootSplash from 'react-native-bootsplash';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -27,11 +27,15 @@ const MainTabNavigator = () => {
       <Tab.Screen name="SummaryTab" component={SummaryScreen} />
     </Tab.Navigator>
   );
-}
+};
 
 const RootNavigation = () => {
+  const onReady = () => {
+    BootSplash.hide();
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer onReady={onReady}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="MainApp" component={MainTabNavigator} />
         <Stack.Screen name="NewNote" component={NewNoteScreen} />

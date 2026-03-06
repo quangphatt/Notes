@@ -1,4 +1,49 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Notes App
+
+A modern notes application built with React Native and TypeScript. Organize your thoughts across multiple categories with an elegant dark UI.
+
+## Runtime Environment & SDK Versions
+
+### Required Runtime Environment
+- **Node.js**: >= 22.11.0
+- **Ruby**: >= 2.7.0 (for iOS development)
+- **CocoaPods**: >= 1.13.0 (for iOS dependencies)
+
+### Core Dependencies
+- **React**: 19.2.3
+- **React Native**: 0.84.1
+- **TypeScript**: 5.8.3
+
+### Navigation & State Management
+- **@react-navigation/native**: 7.1.33
+- **@react-navigation/native-stack**: 7.14.4
+- **@react-navigation/bottom-tabs**: 7.15.5
+
+### Storage & Utilities
+- **@react-native-async-storage/async-storage**: 3.0.1
+- **react-native-safe-area-context**: 5.7.0
+- **react-native-screens**: 4.24.0
+- **uuid**: 13.0.0
+
+### Development Tools
+- **@react-native/cli**: 20.1.0
+- **Babel**: 7.25.2
+- **Metro**: 0.84.1 (built-in with React Native)
+- **Jest**: 29.6.3
+
+### Supported Platforms
+- iOS 13+
+- Android 5.0+
+
+## Features
+
+- **Home Page**: Display all categories with latest 3 notes each (sorted by creation time)
+- **New Note Page**: Create notes with category selection (max 200 characters)
+- **Summary Page**: View total note count per category
+- **Settings Page**: Access app information and settings
+- **Delete All Notes**: Clear all notes from cache with confirmation
+- **Dark Theme UI**: Modern purple and pink color scheme
+- **Responsive Design**: Optimized for different display resolutions
 
 # Getting Started
 
