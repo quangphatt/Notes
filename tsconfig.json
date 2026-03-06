@@ -4,9 +4,9 @@
     "types": ["jest"],
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["src/components/*"],
-      "@/data/*": ["src/data/*"],
-      "@/screens/*": ["src/screens/*"],
+      "@components/*": ["src/components/*"],
+      "@data/*": ["src/data/*"],
+      "@screens/*": ["src/screens/*"],
       "@/*": ["src/*"]
     },
   },
