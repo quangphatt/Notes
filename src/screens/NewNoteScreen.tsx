@@ -19,7 +19,7 @@ import {
 } from 'lucide-react-native';
 import { saveNote } from '@/services/storage';
 import { CATEGORIES } from '@/data/category';
-import { COLORS } from '@/theme/color';
+import { useTheme } from '@/context/ThemeContext';
 
 // Create new note
 const NewNoteScreen = () => {
@@ -29,6 +29,7 @@ const NewNoteScreen = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigation = useNavigation();
   const styles = useStyles();
+  const { colors } = useTheme();
 
   const handleSaveNote = async () => {
     if (!selectedCategory) {
@@ -77,7 +78,7 @@ const NewNoteScreen = () => {
           onPress={() => navigation.goBack()}
           style={styles.backButton}
         >
-          <ChevronLeftIcon size={24} color="#FFFFFF" />
+          <ChevronLeftIcon size={24} color={colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>New note</Text>
       </View>
@@ -102,7 +103,7 @@ const NewNoteScreen = () => {
                 ? CATEGORIES.find((cat) => cat.key === selectedCategory)?.name
                 : 'Choose a category'}
             </Text>
-            <ChevronDownIcon size={20} color="#999" />
+            <ChevronDownIcon size={20} color={colors.muted} />
           </TouchableOpacity>
         </View>
 
@@ -111,7 +112,7 @@ const NewNoteScreen = () => {
           <TextInput
             style={styles.contentInput}
             placeholder="Please input note content"
-            placeholderTextColor="#666"
+            placeholderTextColor={colors.muted}
             multiline
             maxLength={charLimit}
             value={content}
@@ -169,7 +170,7 @@ const NewNoteScreen = () => {
                     {item.name}
                   </Text>
                   {selectedCategory === item.key && (
-                    <CheckIcon size={20} color="#FF1493" />
+                    <CheckIcon size={20} color={colors.primary} />
                   )}
                 </TouchableOpacity>
               )}
@@ -185,11 +186,12 @@ export default NewNoteScreen;
 
 const useStyles = () => {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
 
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: COLORS.background,
+      backgroundColor: colors.background,
       paddingTop: insets.top,
     },
     header: {
@@ -205,7 +207,7 @@ const useStyles = () => {
     headerTitle: {
       fontSize: 24,
       fontWeight: 'bold',
-      color: '#FFFFFF',
+      color: colors.text,
     },
     scrollView: {
       flex: 1,
@@ -223,34 +225,34 @@ const useStyles = () => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      backgroundColor: '#3D2561',
+      backgroundColor: colors.surface,
       paddingHorizontal: 16,
       paddingVertical: 16,
       borderRadius: 12,
       borderWidth: 1,
-      borderColor: '#4D3571',
+      borderColor: colors.border,
     },
     dropdownLabel: {
       fontSize: 16,
-      color: '#FFFFFF',
+      color: colors.text,
     },
     dropdownPlaceholder: {
-      color: '#999',
+      color: colors.muted,
     },
     pickerContainer: {
-      backgroundColor: '#3D2561',
+      backgroundColor: colors.surface,
       borderRadius: 12,
       borderWidth: 1,
-      borderColor: '#4D3571',
+      borderColor: colors.border,
       overflow: 'hidden',
       justifyContent: 'center',
     },
     picker: {
-      color: '#FFFFFF',
+      color: colors.text,
       backgroundColor: 'transparent',
     },
     pickerItem: {
-      color: '#FFFFFF',
+      color: colors.text,
       fontSize: 16,
       height: 120,
     },
@@ -262,7 +264,7 @@ const useStyles = () => {
       borderRadius: 12,
       borderWidth: 2,
       borderColor: '#00BFFF',
-      color: '#FFFFFF',
+      color: colors.text,
       fontSize: 16,
       paddingHorizontal: 16,
       paddingVertical: 16,
@@ -273,12 +275,12 @@ const useStyles = () => {
       paddingHorizontal: 16,
       paddingTop: 24,
       paddingBottom: insets.bottom > 0 ? insets.bottom : 24,
-      backgroundColor: COLORS.dark,
+      backgroundColor: colors.dark,
       borderTopLeftRadius: 24,
       borderTopRightRadius: 24,
     },
     saveButton: {
-      backgroundColor: COLORS.primary,
+      backgroundColor: colors.primary,
       borderRadius: 25,
       paddingVertical: 14,
       alignItems: 'center',
@@ -299,7 +301,7 @@ const useStyles = () => {
       paddingHorizontal: 32,
     },
     modalContent: {
-      backgroundColor: '#3D2561',
+      backgroundColor: colors.surface,
       borderRadius: 16,
       width: '100%',
       maxHeight: 300,
@@ -308,11 +310,11 @@ const useStyles = () => {
     modalTitle: {
       fontSize: 18,
       fontWeight: '600',
-      color: '#FFFFFF',
+      color: colors.text,
       paddingHorizontal: 16,
       paddingVertical: 16,
       borderBottomWidth: 1,
-      borderBottomColor: '#4D3571',
+      borderBottomColor: colors.border,
     },
     modalItem: {
       flexDirection: 'row',
@@ -321,14 +323,14 @@ const useStyles = () => {
       paddingHorizontal: 16,
       paddingVertical: 14,
       borderBottomWidth: 1,
-      borderBottomColor: '#4D3571',
+      borderBottomColor: colors.border,
     },
     modalItemText: {
       fontSize: 16,
-      color: '#FFFFFF',
+      color: colors.text,
     },
     modalItemTextSelected: {
-      color: COLORS.primary,
+      color: colors.primary,
       fontWeight: '600',
     },
   });

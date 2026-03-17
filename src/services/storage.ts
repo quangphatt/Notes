@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Note } from '@/types';
 
 const NOTES_STORAGE_KEY = 'notes_app';
+const THEME_STORAGE_KEY = 'notes_app_theme';
 
 // Get all notes from AsyncStorage
 export const getAllNotes = async (): Promise<Note[]> => {
@@ -91,5 +92,24 @@ export const getNoteCountByCategory = async (
   } catch (error) {
     console.error('Error getting note count:', error);
     return 0;
+  }
+};
+
+// Get saved theme preference ('dark' | 'light' | null)
+export const getThemePreference = async (): Promise<string | null> => {
+  try {
+    return await AsyncStorage.getItem(THEME_STORAGE_KEY);
+  } catch (error) {
+    console.error('Error reading theme preference:', error);
+    return null;
+  }
+};
+
+// Save theme preference
+export const saveThemePreference = async (theme: string): Promise<void> => {
+  try {
+    await AsyncStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch (error) {
+    console.error('Error saving theme preference:', error);
   }
 };

@@ -12,7 +12,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getNoteCountByCategory, getAllNotes } from '@/services/storage';
 import { CATEGORIES } from '@/data/category';
-import { COLORS } from '@/theme/color';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function SummaryScreen() {
   const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>(
@@ -20,6 +20,7 @@ export default function SummaryScreen() {
   );
   const [loading, setLoading] = useState(true);
   const styles = useStyles();
+  const { colors } = useTheme();
 
   // Avatar colors for each category
   const avatarColors = ['#7DD3A0', '#A8D5F0', '#F5E6A3'];
@@ -131,11 +132,12 @@ export default function SummaryScreen() {
 
 const useStyles = () => {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
 
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: COLORS.background,
+      backgroundColor: colors.background,
       paddingTop: insets.top,
     },
     header: {
@@ -149,7 +151,7 @@ const useStyles = () => {
     headerTitle: {
       fontSize: 24,
       fontWeight: 'bold',
-      color: '#FFFFFF',
+      color: colors.text,
     },
     robotImage: {
       width: 100,
@@ -181,16 +183,16 @@ const useStyles = () => {
       alignItems: 'center',
       marginRight: 12,
       borderWidth: 2,
-      borderColor: '#FFFFFF',
+      borderColor: colors.text,
     },
     categoryName: {
       fontSize: 18,
       fontWeight: '600',
-      color: '#FFFFFF',
+      color: colors.text,
       flex: 1,
     },
     detailButton: {
-      backgroundColor: COLORS.primary,
+      backgroundColor: colors.primary,
       borderRadius: 20,
       paddingVertical: 10,
       paddingHorizontal: 24,
@@ -201,16 +203,16 @@ const useStyles = () => {
       color: '#FFFFFF',
     },
     recordCountBox: {
-      backgroundColor: 'rgba(61, 37, 97, 0.6)',
+      backgroundColor: colors.surface,
       borderRadius: 12,
       paddingVertical: 14,
       paddingHorizontal: 16,
       borderWidth: 1,
-      borderColor: 'rgba(77, 53, 113, 0.5)',
+      borderColor: colors.border,
     },
     recordCountText: {
       fontSize: 14,
-      color: '#999',
+      color: colors.muted,
     },
     bottomSpacer: {
       height: 40,

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  Switch,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -17,9 +18,11 @@ import {
   InfoIcon,
   ChevronRightIcon,
   ChevronLeftIcon,
+  SunIcon,
+  MoonIcon,
 } from 'lucide-react-native';
-import { COLORS } from '@/theme/color';
 import { deleteAllNotes } from '@/services/storage';
+import { useTheme } from '@/context/ThemeContext';
 
 const settingsItems = [
   {
@@ -67,6 +70,7 @@ const settingsItems = [
 const SettingsScreen = () => {
   const navigation = useNavigation();
   const styles = useStyles();
+  const { colors, isDark, toggleTheme } = useTheme();
 
   const handleDeleteAllNotes = () => {
     Alert.alert(
@@ -94,7 +98,7 @@ const SettingsScreen = () => {
           onPress={() => navigation.goBack()}
           style={styles.backButton}
         >
-          <ChevronLeftIcon size={24} color="#FFFFFF" />
+          <ChevronLeftIcon size={24} color={colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Settings</Text>
       </View>
@@ -103,6 +107,28 @@ const SettingsScreen = () => {
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
       >
+        {/* Theme Toggle */}
+        <View style={styles.settingItem}>
+          <View style={styles.settingContent}>
+            <View style={styles.iconContainer}>
+              {isDark ? (
+                <MoonIcon size={28} color={colors.icon} />
+              ) : (
+                <SunIcon size={28} color={colors.icon} />
+              )}
+            </View>
+            <Text style={styles.settingTitle}>
+              {isDark ? 'Dark Mode' : 'Light Mode'}
+            </Text>
+          </View>
+          <Switch
+            value={isDark}
+            onValueChange={toggleTheme}
+            trackColor={{ false: colors.border, true: colors.primary }}
+            thumbColor={isDark ? '#FFFFFF' : '#FFFFFF'}
+          />
+        </View>
+
         {settingsItems.map((item, index) => (
           <TouchableOpacity
             key={index}
@@ -111,11 +137,11 @@ const SettingsScreen = () => {
           >
             <View style={styles.settingContent}>
               <View style={styles.iconContainer}>
-                <item.icon size={28} color="#A855F7" />
+                <item.icon size={28} color={colors.icon} />
               </View>
               <Text style={styles.settingTitle}>{item.title}</Text>
             </View>
-            <ChevronRightIcon size={20} color={COLORS.primary} />
+            <ChevronRightIcon size={20} color={colors.primary} />
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -137,11 +163,12 @@ export default SettingsScreen;
 
 const useStyles = () => {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
 
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: COLORS.background,
+      backgroundColor: colors.background,
       paddingTop: insets.top,
     },
     header: {
@@ -157,7 +184,7 @@ const useStyles = () => {
     headerTitle: {
       fontSize: 24,
       fontWeight: 'bold',
-      color: '#FFFFFF',
+      color: colors.text,
     },
     scrollView: {
       flex: 1,
@@ -169,7 +196,7 @@ const useStyles = () => {
       alignItems: 'center',
       paddingHorizontal: 16,
       paddingVertical: 14,
-      backgroundColor: COLORS.surface,
+      backgroundColor: colors.surface,
       borderRadius: 8,
       marginBottom: 12,
     },
@@ -187,18 +214,18 @@ const useStyles = () => {
     },
     settingTitle: {
       fontSize: 16,
-      color: '#FFFFFF',
+      color: colors.text,
       fontWeight: '500',
     },
     settingArrow: {
       fontSize: 20,
-      color: COLORS.primary,
+      color: colors.primary,
     },
     bottomContainer: {
       paddingHorizontal: 16,
       paddingTop: 24,
       paddingBottom: insets.bottom > 0 ? insets.bottom : 24,
-      backgroundColor: COLORS.dark,
+      backgroundColor: colors.dark,
       borderTopLeftRadius: 24,
       borderTopRightRadius: 24,
     },
@@ -206,7 +233,7 @@ const useStyles = () => {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: COLORS.primary,
+      backgroundColor: colors.primary,
       borderRadius: 25,
       paddingVertical: 14,
       paddingHorizontal: 24,
