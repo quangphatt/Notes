@@ -13,7 +13,7 @@ import { getLatestNotesByCategory } from '@/services/storage';
 import { CATEGORIES } from '@data/category';
 import { Note } from '@/types';
 import { BoltIcon } from 'lucide-react-native';
-import { COLORS } from '@/theme/color';
+import { useTheme } from '@/context/ThemeContext';
 
 const HomeScreen = () => {
   const [categoryNotes, setCategoryNotes] = useState<Record<string, Note[]>>(
@@ -22,6 +22,7 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation<any>();
   const styles = useStyles();
+  const { colors } = useTheme();
 
   useFocusEffect(
     useCallback(() => {
@@ -62,7 +63,7 @@ const HomeScreen = () => {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Home</Text>
         <Pressable onPress={onPressSettings}>
-          <BoltIcon size={32} color="#999" />
+          <BoltIcon size={32} color={colors.muted} />
         </Pressable>
       </View>
 
@@ -75,7 +76,7 @@ const HomeScreen = () => {
         {CATEGORIES.map((category, index) => (
           <View key={category.key} style={styles.categorySection}>
             <View style={styles.categoryHeader}>
-              {!!category.icon && <category.icon size={20} color={COLORS.primary} />}
+              {!!category.icon && <category.icon size={20} color={colors.primary} />}
               <Text style={styles.categoryName}>{category.name}</Text>
             </View>
 
@@ -111,11 +112,12 @@ export default HomeScreen;
 
 const useStyles = () => {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
 
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: COLORS.background,
+      backgroundColor: colors.background,
       paddingTop: insets.top,
     },
     header: {
@@ -129,7 +131,7 @@ const useStyles = () => {
     headerTitle: {
       fontSize: 24,
       fontWeight: 'bold',
-      color: '#FFFFFF',
+      color: colors.text,
     },
     headerIcon: {
       fontSize: 24,
@@ -140,7 +142,7 @@ const useStyles = () => {
     },
     sectionTitle: {
       fontSize: 14,
-      color: '#999',
+      color: colors.muted,
       marginBottom: 16,
       marginTop: 8,
     },
@@ -160,13 +162,13 @@ const useStyles = () => {
     categoryName: {
       fontSize: 18,
       fontWeight: '600',
-      color: '#FFFFFF',
+      color: colors.text,
       flex: 1,
     },
     noteItem: {
       paddingVertical: 12,
       paddingHorizontal: 14,
-      backgroundColor: '#3D2561',
+      backgroundColor: colors.surface,
       borderRadius: 8,
       marginBottom: 10,
     },
@@ -175,7 +177,7 @@ const useStyles = () => {
     },
     noteContent: {
       fontSize: 14,
-      color: '#CCC',
+      color: colors.textSecondary,
       lineHeight: 20,
     },
     emptyState: {
@@ -184,13 +186,13 @@ const useStyles = () => {
     },
     emptyText: {
       fontSize: 14,
-      color: '#666',
+      color: colors.muted,
     },
     bottomNav: {
       flexDirection: 'row',
       justifyContent: 'space-around',
-      backgroundColor: '#2A1546',
-      borderTopColor: '#3D2561',
+      backgroundColor: colors.background,
+      borderTopColor: colors.surface,
       borderTopWidth: 1,
       paddingVertical: 8,
       paddingBottom: 20,
@@ -199,24 +201,24 @@ const useStyles = () => {
       alignItems: 'center',
     },
     activeIcon: {
-      backgroundColor: '#FF1493',
+      backgroundColor: colors.primary,
     },
     navLabel: {
       fontSize: 12,
-      color: '#999',
+      color: colors.muted,
       marginTop: 4,
     },
     iconCircle: {
       width: 24,
       height: 24,
       borderRadius: 12,
-      backgroundColor: '#666',
+      backgroundColor: colors.muted,
     },
     iconSquare: {
       width: 24,
       height: 24,
       borderRadius: 6,
-      backgroundColor: '#666',
+      backgroundColor: colors.muted,
     },
   });
 };

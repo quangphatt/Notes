@@ -9,12 +9,13 @@ import {
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HomeIcon, SummaryIcon, PlusIcon } from '@/assets/icons';
-import { COLORS } from '@/theme/color';
+import { useTheme } from '@/context/ThemeContext';
 
 const { width } = Dimensions.get('window');
 
 const BottomNavigation = ({ state, navigation }: BottomTabBarProps) => {
   const styles = useStyles();
+  const { colors } = useTheme();
 
   const handlePress = (routeName: string) => {
     if (routeName === 'NewNoteTab') {
@@ -47,12 +48,12 @@ const BottomNavigation = ({ state, navigation }: BottomTabBarProps) => {
           <HomeIcon
             width={50}
             height={50}
-            color={isHomeActive ? COLORS.primary : '#6B6B7B'}
+            color={isHomeActive ? colors.primary : '#6B6B7B'}
           />
           <Text
             style={[
               styles.tabLabel,
-              { color: isHomeActive ? COLORS.primary : COLORS.muted },
+              { color: isHomeActive ? colors.primary : colors.muted },
             ]}
           >
             Home
@@ -77,12 +78,12 @@ const BottomNavigation = ({ state, navigation }: BottomTabBarProps) => {
           <SummaryIcon
             width={50}
             height={50}
-            color={isSummaryActive ? COLORS.primary : '#6B6B7B'}
+            color={isSummaryActive ? colors.primary : '#6B6B7B'}
           />
           <Text
             style={[
               styles.tabLabel,
-              { color: isSummaryActive ? COLORS.primary : COLORS.muted },
+              { color: isSummaryActive ? colors.primary : colors.muted },
             ]}
           >
             Summary
@@ -95,16 +96,17 @@ const BottomNavigation = ({ state, navigation }: BottomTabBarProps) => {
 
 const useStyles = () => {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
 
   return StyleSheet.create({
     container: {
-      backgroundColor: COLORS.background,
+      backgroundColor: colors.background,
     },
     tabBar: {
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
-      backgroundColor: COLORS.dark,
+      backgroundColor: colors.dark,
       borderTopLeftRadius: 24,
       borderTopRightRadius: 24,
       paddingTop: 10,
